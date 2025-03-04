@@ -52,8 +52,11 @@ The project was divided into four main tasks:
 
 - Loaded and cleaned the data.
 - Conducted exploratory data analysis (EDA) to identify trends, patterns, and anomalies.
+
   ![Closing price over time](images/closing_price.png)
+
 - Decomposed the time series into trend, seasonal, and residual components.
+
   <div style="display: flex; justify-content: space-between;">
     <img src="images/trend.png" alt="Trend" width="30%" />
     <img src="images/seasonal.png" alt="Seazonal" width="30%" />
@@ -61,6 +64,7 @@ The project was divided into four main tasks:
   </div>
 
 - Calculated volatility, rolling means, and standard deviations.
+
 <div style="display: flex; justify-content: space-between;">
   <img src="images/rolling_mean.png" alt="Trend" width="45%" />
   <img src="images/rolling_std.png" alt="Seazonal" width="45%" />
@@ -73,14 +77,28 @@ The project was divided into four main tasks:
 - Evaluated model performance using metrics like MAE, RMSE, and MAPE.
 - Generated forecasts for Tesla (TSLA), BND, and SPY.
 
-### **3. Portfolio Optimization**
+### **3. Model building**
+
+- Built a LSTM model to predict the future prices of the three assets.
+- Used the historical data to train the model and make predictions.
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="images/model.png" alt="LSTM model" width="45%" />
+  <img src="images/validation.png" alt="Validation" width="45%" />
+</div>
+
+- Used the trained model to make predictions for the next 6 - 12 months.
+
+![Forecast image](images/forecast.png)
+
+### **4. Portfolio Optimization**
 
 - Combined forecasted data into a single DataFrame.
 - Calculated annual returns, covariance matrix, and portfolio risk/return.
 - Optimized portfolio weights to maximize the Sharpe Ratio.
 - Analyzed portfolio performance using metrics like Value at Risk (VaR) and cumulative returns.
 
-### **4. Visualization and Insights**
+### **5. Visualization and Insights**
 
 - Visualized portfolio cumulative returns and risk-return trade-off.
 - Provided actionable insights based on forecasted trends and optimized allocations.
