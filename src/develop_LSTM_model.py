@@ -21,8 +21,8 @@ def prepare_lstm_data(data, sequence_length=60):
     - scaler: Fitted scaler for inverse transform.
     """
     # Scale the data
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    scaled_data = scaler.fit_transform(data.values.reshape(-1, 1))
+    #scaler = MinMaxScaler(feature_range=(0, 1))
+    #scaled_data = scaler.fit_transform(data.values.reshape(-1, 1))
 
     # Create sequences
     def create_sequences(data, seq_length):
@@ -32,12 +32,12 @@ def prepare_lstm_data(data, sequence_length=60):
             y.append(data[i + seq_length])
         return np.array(X), np.array(y)
 
-    X, y = create_sequences(scaled_data, sequence_length)
+    X, y = create_sequences(data, sequence_length)
 
     # Split into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
 
-    return X_train, X_test, y_train, y_test, scaler
+    return X_train, X_test, y_train, y_test
 
 def build_lstm_model(input_shape):
     """
@@ -60,7 +60,7 @@ def build_lstm_model(input_shape):
     return model
 
 
-def train_lstm_model(model, X_train, y_train, epochs=50, batch_size=32):
+def train_lstm_model(model, X_train, y_train, epochs=100, batch_size=32):
     """
     Train the LSTM model.
 
@@ -79,7 +79,7 @@ def train_lstm_model(model, X_train, y_train, epochs=50, batch_size=32):
 
 
 
-def forecast_lstm(model, X_test, scaler):
+def forecast_lstm(model, X_test):
     """
     Make predictions using the LSTM model.
 
@@ -92,7 +92,7 @@ def forecast_lstm(model, X_test, scaler):
     - predictions: Forecasted values.
     """
     predictions = model.predict(X_test)
-    predictions = scaler.inverse_transform(predictions)
+    
     return predictions
 
 def evaluate_lstm_model(y_true, y_pred):
