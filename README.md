@@ -1,9 +1,9 @@
----
-
-## **Portfolio Optimization Using Time Series Forecasting**
+## Portfolio Optimization Using Time Series Forecasting\*\*
 
 ### **Overview**
+
 This project focuses on optimizing an investment portfolio using time series forecasting and data-driven insights. The portfolio consists of three assets:
+
 1. **Tesla (TSLA)**: A high-growth, high-risk stock.
 2. **Vanguard Total Bond Market ETF (BND)**: A bond ETF providing stability.
 3. **S&P 500 ETF (SPY)**: A diversified index fund.
@@ -61,8 +61,6 @@ The project was divided into four main tasks:
     <img src="images/seasonal.png" alt="Seazonal" width="30%" />
     <img src="images/residual.png" alt="Residual" width="30%" />
   </div>
-
-  ![Risk-Return Trade-off](images/risk_return.png)
 
 - Calculated volatility, rolling means, and standard deviations.
 <div style="display: flex; justify-content: space-between;">
