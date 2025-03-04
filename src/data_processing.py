@@ -3,6 +3,8 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
+from statsmodels.tsa.seasonal import seasonal_decompose
 
 
 def download_historical_data(tickers, start_date, end_date):
@@ -192,6 +194,71 @@ def analyze_volatility(data_frames, window=30):
         plt.grid()
         plt.show()
 
+
+
+
+
+
+def decompose_time_series_all_in_one(data_frames, period=252):
+    """
+    Decompose the time series into trend, seasonal, and residual components for all assets.
+    Visualize each component (trend, seasonal, residual) in a single plot for all assets.
+    
+    Parameters:
+        data_frames (dict): A dictionary where keys are ticker symbols (e.g., 'TSLA') and values are DataFrames.
+        period (int): The period for seasonal decomposition (default is 252 for annual seasonality in trading days).
+    """
+    # Initialize dictionaries to store decomposed components
+    trends = {}
+    seasonals = {}
+    residuals = {}
+
+    # Perform decomposition for each asset
+    for ticker, data in data_frames.items():
+        # Ensure the data is sorted by date
+        data = data.sort_values('Date')
+        
+        # Set the date column as the index
+        data.set_index('Date', inplace=True)
+        
+        # Perform seasonal decomposition
+        decomposition = seasonal_decompose(data['Close'], model='additive', period=period)
+        
+        # Store the components
+        trends[ticker] = decomposition.trend
+        seasonals[ticker] = decomposition.seasonal
+        residuals[ticker] = decomposition.resid
+
+    # Plot Trend Components
+    plt.figure(figsize=(14, 7))
+    for ticker, trend in trends.items():
+        plt.plot(trend.index, trend, label=f'{ticker} Trend')
+    plt.title('Trend Components for TSLA, BND, and SPY')
+    plt.xlabel('Date')
+    plt.ylabel('Trend')
+    plt.legend()
+    plt.show()
+
+    # Plot Seasonal Components
+    plt.figure(figsize=(14, 7))
+    for ticker, seasonal in seasonals.items():
+        plt.plot(seasonal.index, seasonal, label=f'{ticker} Seasonal')
+    plt.title('Seasonal Components for TSLA, BND, and SPY')
+    plt.xlabel('Date')
+    plt.ylabel('Seasonal')
+    plt.legend()
+    plt.show()
+
+    # Plot Residual Components
+    plt.figure(figsize=(14, 7))
+    for ticker, residual in residuals.items():
+        plt.plot(residual.index, residual, label=f'{ticker} Residual')
+    plt.title('Residual Components for TSLA, BND, and SPY')
+    plt.xlabel('Date')
+    plt.ylabel('Residual')
+    plt.legend()
+    plt.show()
+
 def visualize_All_in_one(data_frames):
     # Plot Closing Price Over Time
     plt.figure(figsize=(14, 7))
@@ -235,6 +302,8 @@ def visualize_All_in_one(data_frames):
     plt.ylabel('Rolling Std')
     plt.legend()
     plt.show()
+
+
 def detect_outliers(data_frames, threshold=3):
     """
     Detect outliers using the Z-score method.
