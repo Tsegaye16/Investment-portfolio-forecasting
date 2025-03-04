@@ -192,6 +192,49 @@ def analyze_volatility(data_frames, window=30):
         plt.grid()
         plt.show()
 
+def visualize_All_in_one(data_frames):
+    # Plot Closing Price Over Time
+    plt.figure(figsize=(14, 7))
+    for ticker, data in data_frames.items():
+        plt.plot(data['Date'], data['Close'], label=ticker)
+    plt.title('Closing Price Over Time')
+    plt.xlabel('Date')
+    plt.ylabel('Closing Price')
+    plt.legend()
+    plt.show()
+
+    # Plot Daily Percentage Change
+    plt.figure(figsize=(14, 7))
+    for ticker, data in data_frames.items():
+        data['Daily Return'] = data['Close'].pct_change()
+        plt.plot(data['Date'], data['Daily Return'], label=ticker)
+    plt.title('Daily Percentage Change')
+    plt.xlabel('Date')
+    plt.ylabel('Daily Return')
+    plt.legend()
+    plt.show()
+
+    # Plot Rolling Mean (Volatility Analysis)
+    plt.figure(figsize=(14, 7))
+    for ticker, data in data_frames.items():
+        data['Rolling Mean'] = data['Close'].rolling(window=20).mean()
+        plt.plot(data['Date'], data['Rolling Mean'], label=f'{ticker} Rolling Mean')
+    plt.title('Volatility Analysis (Rolling Mean)')
+    plt.xlabel('Date')
+    plt.ylabel('Rolling Mean')
+    plt.legend()
+    plt.show()
+
+    # Plot Rolling Standard Deviation (Volatility Analysis)
+    plt.figure(figsize=(14, 7))
+    for ticker, data in data_frames.items():
+        data['Rolling Std'] = data['Close'].rolling(window=20).std()
+        plt.plot(data['Date'], data['Rolling Std'], label=f'{ticker} Rolling Std')
+    plt.title('Volatility Analysis (Rolling Standard Deviation)')
+    plt.xlabel('Date')
+    plt.ylabel('Rolling Std')
+    plt.legend()
+    plt.show()
 def detect_outliers(data_frames, threshold=3):
     """
     Detect outliers using the Z-score method.
@@ -225,3 +268,12 @@ def analyze_unusual_returns(data_frames, threshold=2):
 
         print(f"Unusual Returns for {ticker}:")
         print(unusual_returns[['Date', 'Close', 'Daily Return']], "\n")
+
+def save_ticker_data(data_frames, output_directory):
+    for ticker, data in data_frames.items():
+        # Define the file path
+        file_path = f"{output_directory}/{ticker}_data.csv"
+
+        # Save the DataFrame to a CSV file
+        data.to_csv(file_path, index=False)
+        print(f"Data for {ticker} saved to {file_path}")
