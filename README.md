@@ -1,4 +1,4 @@
-## Portfolio Optimization Using Time Series Forecasting\*\*
+## Portfolio Optimization Using Time Series Forecasting
 
 ### **Overview**
 
@@ -9,8 +9,6 @@ This project focuses on optimizing an investment portfolio using time series for
 3. **S&P 500 ETF (SPY)**: A diversified index fund.
 
 The goal is to forecast future prices of these assets, optimize the portfolio allocation to maximize returns while minimizing risk, and provide actionable insights for investors.
-
----
 
 ### **Table of Contents**
 
